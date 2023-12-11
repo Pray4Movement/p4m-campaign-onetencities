@@ -5,7 +5,7 @@
  * Description: Extra fields and settings
  * Text Domain: oneten-cities
  * Domain Path: /languages
- * Version:  0.1
+ * Version:  2023.12.11
  * Author URI: https://github.com/DiscipleTools
  * GitHub Plugin URI: https://github.com/DiscipleTools/oneten-cities
  * Requires at least: 4.7.0

@@ -77,13 +77,8 @@ class Oneten_Cities_Workflows {
     public static function create_post_day( $campaign_id, $prayer_point ){
         global $wpdb;
 
-        $existing_id =
-
-        $campaign = DT_Posts::get_post( 'campaigns', $campaign_id );
         //get day related to campaign start
-        $campaign_start = $campaign['start_date']['timestamp'];
-        $post_date = strtotime( $prayer_point['forday'] );
-        $day = ( $post_date - $campaign_start ) / 86400;
+        $day = DT_Campaign_Fuel::what_day_in_campaign( $prayer_point['forday'], $campaign_id );
 
         $post_content = '';
         $image = '';
@@ -123,7 +118,7 @@ class Oneten_Cities_Workflows {
                 PORCH_LANDING_META_KEY => $prayer_point['forday'],
                 'post_language' => 'en_US',
                 'day' => $day,
-                'linked_campaign' => $campaign['ID'],
+                'linked_campaign' => $campaign_id,
             ]
         ];
 
