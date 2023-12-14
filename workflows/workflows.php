@@ -24,7 +24,7 @@ class Oneten_Cities_Workflows {
     public static function sync_app_prayer_fuel(){
         $campaigns = DT_Posts::list_posts( 'campaigns', [
             'app_auth_code' => [ '*' ]
-        ] );
+        ], false );
 
         foreach ( $campaigns['posts'] as $campaign ){
             $auth_key = $campaign['app_auth_code'];
