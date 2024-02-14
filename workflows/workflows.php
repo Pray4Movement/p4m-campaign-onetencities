@@ -35,7 +35,7 @@ class Oneten_Cities_Workflows {
 
 //            $start_date = gmdate( 'Y-m-d', $campaign['start_date']['timestamp'] );
             $start_date = gmdate( 'Y-m-d', strtotime( '-5 day' ) );
-            $end_date = gmdate( 'Y-m-d', strtotime( '+15 day' ) );
+            $end_date = gmdate( 'Y-m-d', strtotime( '+2 day' ) );
 
             foreach ( $enabled_languages as $lang_code ){
                 $lang = self::get_lang( $lang_code );
@@ -92,7 +92,7 @@ class Oneten_Cities_Workflows {
 
         $post_content = '';
         $image = '';
-        if ( !empty( $prayer_point['picturesmall'] ) ){
+        if ( !empty( $prayer_point['picturesmall'] ) && $prayer_point['picturesmall'] !== 'https://prod.connect.prayerforus.com/uploads/small/' ){
             $image = '<figure class="wp-block-image"><img src="' . $prayer_point['picturesmall'] . '" alt="prayer point image"  /></figure >';
         }
         $prayer_point_content = [
