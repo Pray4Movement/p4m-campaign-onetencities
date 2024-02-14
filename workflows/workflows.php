@@ -95,6 +95,15 @@ class Oneten_Cities_Workflows {
         if ( !empty( $prayer_point['picturesmall'] ) && $prayer_point['picturesmall'] !== 'https://prod.connect.prayerforus.com/uploads/small/' ){
             $image = '<figure class="wp-block-image"><img src="' . $prayer_point['picturesmall'] . '" alt="prayer point image"  /></figure >';
         }
+
+        //if does not contain html, add <p> tags
+        if ( !strpos( $prayer_point['introduction'], '<' ) ){
+            $prayer_point['introduction'] = '<p>' . $prayer_point['introduction'] . '</p>';
+        }
+        if ( !strpos( $prayer_point['remainder'], '<' ) ){
+            $prayer_point['remainder'] = '<p>' . $prayer_point['remainder'] . '</p>';
+        }
+
         $prayer_point_content = [
             '<!-- wp:heading {"level":3} -->',
             '<h3><strong>' . $prayer_point['title'] . '</strong></h3>',
@@ -113,6 +122,7 @@ class Oneten_Cities_Workflows {
             '<!-- /wp:image -->',
 
         ];
+
         $post_content .= implode( '', wp_unslash( $prayer_point_content ) );
 
         $args = [
