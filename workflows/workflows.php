@@ -234,7 +234,7 @@ class Oneten_Cities_Workflows {
                 'language_id' => 9,
                 'language_name' => 'Portuguese',
                 'language_code' => 'pt',
-                'language_locale' => 'pt_BR',
+                'language_locale' => 'pt',
                 'language_direction' => 'ltr',
                 'language_date_format' => 'dd MMMM',
                 'language_status' => 1,
