@@ -130,12 +130,12 @@ class Oneten_Cities_Workflows {
 
             'post_content'  => $post_content,
             'post_excerpt'  => wp_strip_all_tags( $prayer_point['introduction'] ),
-            'post_type'  => PORCH_LANDING_POST_TYPE,
+            'post_type'  => 'landing',
             'post_status'   => 'publish',
             'post_author'   => get_current_user_id(),
             'meta_input' => [
                 'app_prayer_point_id' => $prayer_point['id'],
-                PORCH_LANDING_META_KEY => $prayer_point['forday'],
+                'prayer_fuel_magic_key' => $prayer_point['forday'],
                 'post_language' => $language_code,
                 'day' => $day,
                 'linked_campaign' => $campaign_id,
