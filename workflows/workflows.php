@@ -37,48 +37,59 @@ class Oneten_Cities_Workflows {
             $start_date = gmdate( 'Y-m-d', strtotime( '-5 day' ) );
             $end_date = gmdate( 'Y-m-d', strtotime( '+2 day' ) );
 
-            foreach ( $enabled_languages as $lang_code ){
-                $lang = self::get_lang( $lang_code );
-                if ( empty( $lang ) ){
-                    continue;
-                }
+//            $language_id = $lang['language_id'];
 
-                $language_id = $lang['language_id'];
-
-                $url = 'https://prod.connect.prayerforus.com/api/v2/prayerpoints?source=DT';
-                if ( !empty( $start_date ) ){
-                    $url .= '&start_date=' . $start_date;
-                }
-                if ( !empty( $end_date ) ){
-                    $url .= '&end_date=' . $end_date;
-                }
-                if ( !empty( $language_id ) ){
-                    $url .= '&language_id=' . $language_id;
-                }
-
-                $call = wp_remote_get(
-                    $url,
-                    [
-                        'headers' => [
-                            'Authorization' => $auth_key,
-                        ]
+            $url = 'https://prod.connect.prayerforus.com/api/v2/prayerpoints?source=DT';
+            if ( !empty( $start_date ) ){
+                $url .= '&start_date=' . $start_date;
+            }
+            if ( !empty( $end_date ) ){
+                $url .= '&end_date=' . $end_date;
+            }
+//            if ( !empty( $language_id ) ){
+//                $url .= '&language_id=' . $language_id;
+//            }
+            $call = wp_remote_get(
+                $url,
+                [
+                    'headers' => [
+                        'Authorization' => $auth_key,
                     ]
-                );
-                $body = wp_remote_retrieve_body( $call );
-                $data = json_decode( $body, true );
+                ]
+            );
+            $body = wp_remote_retrieve_body( $call );
+            $data = json_decode( $body, true );
 
-                $prayer_points = $data['data'];
+            $prayer_points = $data['data'];
 
-                global $wpdb;
-                $existing_ids = $wpdb->get_col( "
-                    SELECT meta_value
-                    FROM $wpdb->postmeta
-                    WHERE meta_key = 'app_prayer_point_id'
-                " );
+            global $wpdb;
+            $existing_ids = $wpdb->get_col( "
+                SELECT meta_value
+                FROM $wpdb->postmeta
+                WHERE meta_key = 'app_prayer_point_id'
+            " );
 
-                foreach ( $prayer_points as $prayer_point ){
-                    if ( !in_array( $prayer_point['id'], $existing_ids ) ){
-                        self::create_post_day( $campaign['ID'], $prayer_point, $lang_code );
+
+
+            foreach ( $prayer_points as $prayer_point ){
+                if ( !in_array( $prayer_point['id'], $existing_ids ) ){
+                    self::create_post_day( $campaign['ID'], $prayer_point, 'en_US' );
+
+                    if ( !isset( $prayer_point['sub_contents'] ) ){
+                        continue;
+                    }
+
+                    foreach ( $prayer_point['sub_contents'] as $sub_content ){
+                        if ( in_array( $sub_content['id'], $existing_ids ) ){
+                            continue;
+                        }
+                        $lang = self::get_lang_by_language_id( $sub_content['language_id'] );
+                        if ( !empty( $lang ) && !in_array( $lang['language_locale'], $enabled_languages ) ){
+                            continue;
+                        }
+                        $sub_content['picturesmall'] = $prayer_point['picturesmall'];
+
+                        self::create_post_day( $campaign['ID'], $sub_content, $lang['language_locale'] );
                     }
                 }
             }
@@ -146,6 +157,16 @@ class Oneten_Cities_Workflows {
 
     }
 
+
+    public static function get_lang_by_language_id( $lang_id ){
+        $langs = self::get_app_languages();
+        foreach ( $langs as $lang ){
+            if ( $lang['language_id'] == $lang_id ){
+                return $lang;
+            }
+        }
+        return null;
+    }
 
     public static function get_lang( $lang_code ){
         $langs = self::get_app_languages();
