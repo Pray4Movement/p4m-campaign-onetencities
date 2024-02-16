@@ -200,8 +200,8 @@ class Oneten_Cities_Workflows {
             [
                 'language_id' => 3,
                 'language_name' => 'Spanish',
-                'language_code' => 'es_ES',
-                'language_locale' => 'es',
+                'language_code' => 'es',
+                'language_locale' => 'es_ES',
                 'language_direction' => 'ltr',
                 'language_date_format' => 'dd MMMM',
                 'language_status' => 1,
