@@ -115,10 +115,10 @@ class Oneten_Cities_Workflows {
             $prayer_point['remainder'] = '<p>' . $prayer_point['remainder'] . '</p>';
         }
 
+//        '<!-- wp:heading {"level":3} -->',
+//        '<h3><strong>' . $prayer_point['title'] . '</strong></h3>',
+//        '<!-- /wp:heading -->',
         $prayer_point_content = [
-            '<!-- wp:heading {"level":3} -->',
-            '<h3><strong>' . $prayer_point['title'] . '</strong></h3>',
-            '<!-- /wp:heading -->',
 
             '<!-- wp:paragraph -->',
             wp_kses_post( $prayer_point['introduction'] ),
