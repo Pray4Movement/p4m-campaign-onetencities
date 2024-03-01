@@ -583,3 +583,4 @@ class DT_Get_Fuel_For_Campaign_Job extends Job {
         }
     }
 }
+new Oneten_Cities_Workflows();
