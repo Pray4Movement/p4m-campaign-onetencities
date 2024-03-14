@@ -496,12 +496,16 @@ class DT_Get_Fuel_For_Campaign_Job extends Job {
      * @var int
      */
     public $campaign_id;
+    public $start_date;
+    public $end_date;
 
     /**
      * Job constructor.
      */
-    public function __construct( $id ){
+    public function __construct( $id, $start_date = null, $end_date = null ){
         $this->campaign_id = $id;
+        $this->start_date = $start_date;
+        $this->end_date = $end_date;
     }
 
     /**
@@ -521,8 +525,8 @@ class DT_Get_Fuel_For_Campaign_Job extends Job {
             $enabled_languages = [ 'en_US' ];
         }
 
-        $start_date = gmdate( 'Y-m-d', strtotime( '-5 day' ) );
-        $end_date = gmdate( 'Y-m-d', strtotime( '+2 day' ) );
+        $start_date = $this->start_date ?? gmdate( 'Y-m-d', strtotime( '-5 day' ) );
+        $end_date = $this->end_date ?? gmdate( 'Y-m-d', strtotime( '+2 day' ) );
 
         $url = 'https://prod.connect.prayerforus.com/api/v2/prayerpoints?source=DT';
         if ( !empty( $start_date ) ){
@@ -550,35 +554,34 @@ class DT_Get_Fuel_For_Campaign_Job extends Job {
         $prayer_points = $data['data'];
 
         global $wpdb;
-        //@todo limit to this campaign posts
         $existing_ids = $wpdb->get_col( "
             SELECT meta_value
             FROM $wpdb->postmeta
             WHERE meta_key = 'app_prayer_point_id'
+            AND post_id IN ( SELECT post_id FROM $wpdb->postmeta WHERE meta_key = 'linked_campaign' AND meta_value = $this->campaign_id )
         " );
 
 
 
         foreach ( $prayer_points as $prayer_point ){
             if ( !in_array( $prayer_point['id'], $existing_ids ) ){
+
+                if ( !empty( $prayer_point['sub_contents'] ) ){
+                    foreach ( $prayer_point['sub_contents'] as $sub_content ){
+                        if ( in_array( $sub_content['id'], $existing_ids ) ){
+                            continue;
+                        }
+                        $lang = Oneten_Cities_Workflows::get_lang_by_language_id( $sub_content['language_id'] );
+    //                    if ( !empty( $lang ) && !in_array( $lang['language_locale'], $enabled_languages ) ){
+    //                        continue;
+    //                    }
+                        $sub_content['picturesmall'] = $prayer_point['picturesmall'];
+
+                        Oneten_Cities_Workflows::create_post_day( $campaign['ID'], $sub_content, $lang['language_locale'] );
+                    }
+                }
                 Oneten_Cities_Workflows::create_post_day( $campaign['ID'], $prayer_point, 'en_US' );
 
-                if ( !isset( $prayer_point['sub_contents'] ) ){
-                    continue;
-                }
-
-                foreach ( $prayer_point['sub_contents'] as $sub_content ){
-                    if ( in_array( $sub_content['id'], $existing_ids ) ){
-                        continue;
-                    }
-                    $lang = Oneten_Cities_Workflows::get_lang_by_language_id( $sub_content['language_id'] );
-                    if ( !empty( $lang ) && !in_array( $lang['language_locale'], $enabled_languages ) ){
-                        continue;
-                    }
-                    $sub_content['picturesmall'] = $prayer_point['picturesmall'];
-
-                    Oneten_Cities_Workflows::create_post_day( $campaign['ID'], $sub_content, $lang['language_locale'] );
-                }
             }
         }
     }

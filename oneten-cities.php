@@ -92,6 +92,7 @@ class Oneten_Cities {
         require_once( 'tile/custom-tile.php' ); // add custom tile
         if ( is_admin() ){
             require_once( 'admin/admin-menu-and-tabs.php' ); // adds starter admin page and section for plugin
+            require_once( 'admin/sync-prayer-fuel.php' ); // adds starter admin page and section for plugin
         }
 
         $this->i18n();
