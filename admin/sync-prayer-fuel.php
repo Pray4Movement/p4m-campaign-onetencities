@@ -118,7 +118,7 @@ class Oneten_Sync_Fuel_Menu {
             <tbody>
             <tr>
                 <td>
-                    Delete all prayer fuel and resync for start
+                    Delete all prayer fuel and resync from 2024-01-01 to today.
                 </td>
                 <td>
                     <form method="post">
