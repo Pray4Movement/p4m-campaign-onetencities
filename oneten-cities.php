@@ -101,6 +101,7 @@ class Oneten_Cities {
             add_filter( 'plugin_row_meta', [ $this, 'plugin_description_links' ], 10, 4 );
         }
         require_once( 'workflows/workflows.php' );
+        require_once( 'porch/oneten-cities-porch-loader.php' );
 
     }
 
