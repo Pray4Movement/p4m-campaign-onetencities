@@ -102,6 +102,7 @@ class Oneten_Cities {
         }
         require_once( 'workflows/workflows.php' );
         require_once( 'porch/oneten-cities-porch-loader.php' );
+        require_once( 'porch-simple/oneten-cities-porch-loader.php' );
 
     }
 
