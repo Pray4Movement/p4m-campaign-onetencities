@@ -48,6 +48,14 @@ class Oneten_Cities_Tile
                 'font-icon' => 'mdi mdi-apple',
                 'enabled' => true,
             ];
+            $fields['city_link'] = [
+                'name'        => __( 'City Link', 'oneten-cities' ),
+                'type'        => 'text',
+                'default'     => '',
+                'tile'        => 'campaign_setup',
+                'font-icon' => 'mdi mdi-link',
+                'enabled' => true,
+            ];
         }
         return $fields;
     }

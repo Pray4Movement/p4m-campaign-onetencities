@@ -78,10 +78,11 @@ if ( $dt_campaign_selected_campaign_magic_link_settings['color'] === 'preset' ){
                     </div>
                     <h4><?php display_translated_field( 'pray_section_title' ); ?></h4>
                     <p><?php display_translated_field( 'pray_section_text' ); ?></p>
-                    <p>
-
-                        <a href="https://110cities.com">More city details</a>.
-                    </p>
+                    <?php if ( !empty( $campaign_fields['city_link'] ) ): ?>
+                        <p>
+                            <a href="<?php echo esc_html( $campaign_fields['city_link'] ); ?>" target="_blank">More city details</a>.
+                        </p>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="col-md-4 col-sm-6">
@@ -159,14 +160,14 @@ if ( $dt_campaign_selected_campaign_magic_link_settings['color'] === 'preset' ){
         <div class="row" style="justify-content: center">
             <?php if ( !empty( $campaign_fields['android_app_link'] ) ): ?>
             <div>
-                <a href="" target="_blank">
+                <a href="<?php echo esc_html( $campaign_fields['android_app_link'] ); ?>" target="_blank">
                     <img src="<?php echo esc_html( One_Ten_Cities_Porch_Simple_Loader::$porch_url ); ?>google-play-badge.png" style="z-index: 1; height: 6rem">
                 </a>
             </div>
             <?php endif; ?>
             <?php if ( !empty( $campaign_fields['ios_app_link'] ) ): ?>
             <div>
-                <a href="" target="_blank">
+                <a href="<?php echo esc_html( $campaign_fields['ios_app_link'] ); ?>" target="_blank">
                     <img src="<?php echo esc_html( One_Ten_Cities_Porch_Simple_Loader::$porch_url ); ?>ios-app-store-badge.svg"  style="z-index: 1; height: 6rem; padding: 0.875rem">
                 </a>
             </div>
