@@ -49,6 +49,86 @@ if ( $dt_campaign_selected_campaign_magic_link_settings['color'] === 'preset' ){
 <div id="edit_modal_div"></div>
 <!-- MODALS -->
 
+<!-- Vision -->
+<section id="campaign-vision" class="section">
+    <div class="container">
+<!--        <div class="section-header row">-->
+<!--            <div class="col-sm-12 --><?php //echo esc_html( false ? 'col-md-8' : 'col-md-12' ); ?><!--">-->
+<!--                <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">--><?php //display_translated_field( 'vision_title', 'btn-common', true ); ?><!--</h2>-->
+<!--                <hr class="lines wow zoomIn" data-wow-delay="0.3s">-->
+<!--                <div style="padding: 1em; text-align: start" >-->
+<!--                    <p  class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">-->
+<!--                        <span style="text-align: start">-->
+<!--                        --><?php //display_translated_field( 'vision' ); ?>
+<!--                        </span>-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            --><?php //if ( true ): ?>
+<!--                <div class="col-sm-12 col-md-4">-->
+<!--                    <img src="https://www.110cities.com/wp-content/uploads/2022/11/KARACHI_Page_1_Image_0001.jpg" alt="Karachi" style="width: 100%; border-radius: 10px">-->
+<!--                </div>-->
+<!--            --><?php //endif; ?>
+<!--        </div>-->
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <div class="item-boxes wow fadeInDown" data-wow-delay="0.2s">
+                    <div class="icon">
+                        <img class="<?php echo !empty( $porch_fields['movement_section_icon']['value'] ) ? '' : 'color-img'?>" style="height: 40px; margin-top:10px" src="<?php echo esc_html( DT_Porch_Settings::get_field_translation( 'movement_section_icon' ) ) ?>" alt="Movement icon"/>
+                    </div>
+                    <h4><?php display_translated_field( 'pray_section_title' ); ?></h4>
+                    <p><?php display_translated_field( 'pray_section_text' ); ?></p>
+                    <p>
+
+                        <a href="https://110cities.com">More city details</a>.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="item-boxes wow fadeInDown" data-wow-delay="0.4s">
+                    <div class="icon">
+                        <img class="<?php echo !empty( $porch_fields['pray_section_icon']['value'] ) ? '' : 'color-img'?>" style="height: 40px; margin-top:10px" src="<?php echo esc_html( DT_Porch_Settings::get_field_translation( 'pray_section_icon' ) ) ?>" alt="Praying hands icon"/>
+                    </div>
+                    <h4>Vision</h4>
+                    <p>24/7 prayer for this city to be reached with the Gospel and saturated with Christ-exalting churches.</p>
+<!--                    <h4>--><?php //display_translated_field( 'movement_section_title' ); ?><!--</h4>-->
+<!--                    <p>--><?php //display_translated_field( 'movement_section_text' ); ?><!--</p>-->
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="item-boxes wow fadeInDown" data-wow-delay="0.6s">
+                    <div class="icon">
+                        <img class="<?php echo !empty( $porch_fields['time_section_icon']['value'] ) ? '' : 'color-img'?>" style="height: 40px; margin-top:10px" src="<?php echo esc_html( DT_Porch_Settings::get_field_translation( 'time_section_icon' ) ) ?>" alt="Clock icon"/>
+                    </div>
+                    <h4><?php display_translated_field( 'time_section_title' ); ?></h4>
+                    <p><?php display_translated_field( 'time_section_text' ); ?></p>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="justify-content: center">
+            <a href="#sign-up" class="btn btn-common"><?php esc_html_e( 'Sign Up to Pray', 'disciple-tools-prayer-campaigns' ); ?></a>
+        </div>
+
+    </div>
+</section>
+<!-- Services Section End -->
+
+
+<!-- COUNTER ROW -->
+<div id="days_until" class="counters section" data-stellar-background-ratio="0.5" >
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row" style="margin-top: 30px">
+<!--            <div class="col-sm-12 col-md-7 col-lg-8 what-content-text">-->
+<!--                --><?php //display_translated_field( 'what_content', 'btn-border' ); ?>
+<!---->
+<!--            </div>-->
+<!--            <div class="col-sm-12 col-md-5 col-lg-4">-->
+<!--                <img src="https://www.110cities.com/wp-content/uploads/2022/11/KARACHI_Page_1_Image_0001.jpg" alt="Karachi" style="width: 100%; border-radius: 10px">-->
+<!--            </div>-->
+        </div>
+    </div>
+</div>
 
 <!-- SIGN UP TO PRAY -->
 <section id="features" class="section" data-stellar-background-ratio="0.2">
@@ -65,69 +145,36 @@ if ( $dt_campaign_selected_campaign_magic_link_settings['color'] === 'preset' ){
 <!-- Features Section End -->
 
 
-<!-- COUNTER ROW -->
 <div class="counters section" data-stellar-background-ratio="0.5" >
-    <div class="overlay"></div>
+    <div class="overlay" style="z-index: -1;"></div>
     <div class="container">
-        <div class="row">
-            <?php
-            $days_in_campaign = DT_Campaign_Fuel::total_days_in_campaign();
-            $minutes_committed = DT_Campaigns_Base::get_minutes_prayed_and_scheduled( $campaign_fields['ID'] );
-            $time_committed = DT_Time_Utilities::display_minutes_in_time( $minutes_committed );
+        <?php if ( !empty( $campaign_fields['ios_app_link'] ) && !empty( $campaign_fields['android_app_link'] ) ): ?>
+        <div class="section-header">
+            <h2 class="section-title" data-wow-duration="1000ms" data-wow-delay="0.3s" style="color: white">
+                Prayer fuel apps
+            </h2>
+            <p>After you sign up consider downloading one of the prayer fuel apps for this city.</p>
+        </div>
 
-            $size = $campaign_has_end_date ? 'col-sm-6 col-md-4 col-lg-4' : 'col-sm-6 col-md-6 col-lg-6';
-            ?>
-            <div class="<?php echo esc_html( $size ); ?>">
-                <div class="wow fadeInUp" data-wow-delay=".2s">
-                    <div class="facts-item">
-                        <div class="icon">
-                            <i class="lnr lnr-calendar-full"></i>
-                        </div>
-                        <div class="fact-count">
-
-                            <h3><?php echo esc_html( $time_committed ); ?></h3>
-                            <h4><?php esc_html_e( 'Time Committed', 'disciple-tools-prayer-campaigns' ) ?></h4>
-
-                        </div>
-                    </div>
-                </div>
+        <div class="row" style="justify-content: center">
+            <?php if ( !empty( $campaign_fields['android_app_link'] ) ): ?>
+            <div>
+                <a href="" target="_blank">
+                    <img src="<?php echo esc_html( One_Ten_Cities_Porch_Simple_Loader::$porch_url ); ?>google-play-badge.png" style="z-index: 1; height: 6rem">
+                </a>
             </div>
-            <?php $subscribers_count = DT_Subscriptions::get_subscribers_count( $campaign_fields['ID'] ); ?>
-
-            <div class="<?php echo esc_html( $size ); ?>">
-                <div class="wow fadeInUp" data-wow-delay=".6s">
-                    <div class="facts-item">
-                        <div class="icon">
-                            <i class="lnr lnr-user"></i>
-                        </div>
-                        <div class="fact-count">
-                            <h3><?php echo esc_html( $subscribers_count ?? 0 ) ?></h3>
-                            <h4><?php esc_html_e( 'Prayer Warriors', 'disciple-tools-prayer-campaigns' ); ?></h4>
-                        </div>
-                    </div>
-                </div>
+            <?php endif; ?>
+            <?php if ( !empty( $campaign_fields['ios_app_link'] ) ): ?>
+            <div>
+                <a href="" target="_blank">
+                    <img src="<?php echo esc_html( One_Ten_Cities_Porch_Simple_Loader::$porch_url ); ?>ios-app-store-badge.svg"  style="z-index: 1; height: 6rem; padding: 0.875rem">
+                </a>
             </div>
-            <?php if ( $campaign_has_end_date ) : ?>
-                <div class="<?php echo esc_html( $size ); ?>">
-                    <div class="wow fadeInUp" data-wow-delay=".8s">
-                        <div class="facts-item">
-                            <div class="icon">
-                                <i class="lnr lnr-heart"></i>
-                            </div>
-                            <div class="fact-count">
-
-                                <h3><?php echo $days_in_campaign !== -1 ? esc_html( $days_in_campaign * 24 * 4 ) : '2880' ?></h3>
-                                <h4><?php esc_html_e( 'Prayer Commitments Needed', 'disciple-tools-prayer-campaigns' ); ?></h4>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
             <?php endif; ?>
         </div>
+        <?php endif; ?>
     </div>
 </div>
-<!-- Counter Section End -->
 
 <!-- Blog Section -->
 <section id="blog" class="section">
