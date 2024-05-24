@@ -119,7 +119,7 @@ class Oneten_Cities_Workflows {
                 'language_id' => 1,
                 'language_name' => 'Chinese',
                 'language_code' => 'zh',
-                'language_locale' => 'zh_CN',
+                'language_locale' => 'zh_Hans',
                 'language_direction' => 'ltr',
                 'language_date_format' => 'MM?dd?',
                 'language_status' => 1,

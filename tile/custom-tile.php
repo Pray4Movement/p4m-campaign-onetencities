@@ -27,7 +27,25 @@ class Oneten_Cities_Tile
                 'type'        => 'text',
                 'default'     => '',
                 'tile'        => 'campaign_setup',
-                'icon' => get_template_directory_uri() . '/dt-assets/images/edit.svg',
+                'font-icon' => 'mdi mdi-key',
+                'enabled' => true,
+            ];
+            //android app link
+            $fields['android_app_link'] = [
+                'name'        => __( 'Android App Link', 'oneten-cities' ),
+                'type'        => 'text',
+                'default'     => '',
+                'tile'        => 'campaign_setup',
+                'font-icon' => 'mdi mdi-android',
+                'enabled' => true,
+            ];
+            //ios app link
+            $fields['ios_app_link'] = [
+                'name'        => __( 'iOS App Link', 'oneten-cities' ),
+                'type'        => 'text',
+                'default'     => '',
+                'tile'        => 'campaign_setup',
+                'font-icon' => 'mdi mdi-apple',
                 'enabled' => true,
             ];
         }
