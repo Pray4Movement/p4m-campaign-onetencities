@@ -14,10 +14,10 @@ class Oneten_Cities_Workflows {
      * Oneten_Cities_Workflows constructor.
      */
     public function __construct() {
-        if ( !wp_next_scheduled( 'oneten_cities_sync_app_prayer_fuel' ) ) {
-            wp_schedule_event( time(), 'twicedaily', 'oneten_cities_sync_app_prayer_fuel' );
+        if ( !wp_next_scheduled( 'oneten_cities_sync_app_prayer_fuel_hourly' ) ) {
+            wp_schedule_event( time(), 'hourly', 'oneten_cities_sync_app_prayer_fuel_hourly' );
         }
-        add_action( 'oneten_cities_sync_app_prayer_fuel', [ $this, 'sync_app_prayer_fuel' ] );
+        add_action( 'oneten_cities_sync_app_prayer_fuel_hourly', [ $this, 'sync_app_prayer_fuel' ] );
     }
 
 
