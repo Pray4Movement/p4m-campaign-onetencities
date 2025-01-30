@@ -33,7 +33,7 @@ class Oneten_Cities_Workflows {
     }
 
 
-    public static function create_post_day( $campaign_id, $prayer_point, $language_code = 'en_US'  ){
+    public static function create_post_day( $campaign_id, $prayer_point, $language_code = 'en_US' ){
         //get day related to campaign start
         $day = DT_Campaign_Fuel::what_day_in_campaign( $prayer_point['forday'], $campaign_id );
 
@@ -90,7 +90,6 @@ class Oneten_Cities_Workflows {
         ];
 
         $installed[] = wp_insert_post( $args );
-
     }
 
 
@@ -487,7 +486,6 @@ class Oneten_Cities_Workflows {
         ];
         return $language_data;
     }
-
 }
 
 use WP_Queue\Job;
@@ -554,12 +552,15 @@ class DT_Get_Fuel_For_Campaign_Job extends Job {
         $prayer_points = $data['data'];
 
         global $wpdb;
-        $existing_ids = $wpdb->get_col( "
+        $one_year_ago = gmdate( 'Y-m-d', time() - 350 * DAY_IN_SECONDS );
+        $existing_ids = $wpdb->get_col( $wpdb->prepare( "
             SELECT meta_value
             FROM $wpdb->postmeta
+            INNER JOIN $wpdb->posts p ON p.ID = $wpdb->postmeta.post_id
             WHERE meta_key = 'app_prayer_point_id'
-            AND post_id IN ( SELECT post_id FROM $wpdb->postmeta WHERE meta_key = 'linked_campaign' AND meta_value = $this->campaign_id )
-        " );
+            AND post_id IN ( SELECT post_id FROM $wpdb->postmeta WHERE meta_key = 'linked_campaign' AND meta_value = %d )
+            AND p.post_date > %s
+        ", $this->campaign_id, $one_year_ago ) );
 
 
 
