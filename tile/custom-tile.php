@@ -21,7 +21,7 @@ class Oneten_Cities_Tile
      * @return array
      */
     public function dt_custom_fields( array $fields, string $post_type = '' ) {
-        if ( $post_type === 'campaigns' || $post_type === 'starter_post_type' ){
+        if ( $post_type === 'campaigns' ){
             $fields['app_auth_code'] = [
                 'name'        => __( 'App Auth Code', 'oneten-cities' ),
                 'type'        => 'text',

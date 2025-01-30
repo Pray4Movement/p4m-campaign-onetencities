@@ -551,16 +551,19 @@ class DT_Get_Fuel_For_Campaign_Job extends Job {
 
         $prayer_points = $data['data'];
 
+        $todays_campaign_day = DT_Campaign_Fuel::what_day_in_campaign( gmdate( 'Y-m-d' ), $this->campaign_id, 'daily' );
+        $year_ago_ish = $todays_campaign_day - 350;
+
         global $wpdb;
-        $one_year_ago = gmdate( 'Y-m-d', time() - 350 * DAY_IN_SECONDS );
         $existing_ids = $wpdb->get_col( $wpdb->prepare( "
-            SELECT meta_value
-            FROM $wpdb->postmeta
-            INNER JOIN $wpdb->posts p ON p.ID = $wpdb->postmeta.post_id
-            WHERE meta_key = 'app_prayer_point_id'
-            AND post_id IN ( SELECT post_id FROM $wpdb->postmeta WHERE meta_key = 'linked_campaign' AND meta_value = %d )
-            AND p.post_date > %s
-        ", $this->campaign_id, $one_year_ago ) );
+            SELECT pm.meta_value
+            FROM $wpdb->postmeta pm 
+            INNER JOIN $wpdb->postmeta pm2 ON
+             ( pm.post_id = pm2.post_id AND pm2.meta_key = 'linked_campaign' AND pm2meta_value = %d ) 
+            INNER JOIN $wpdb->postmeta pm3 ON
+             ( pm.post_id = pm3.post_id && pm2.meta_key = 'day' AND pm3.meta_value > %d)
+            WHERE pm.meta_key = 'app_prayer_point_id'
+        ", $this->campaign_id, $year_ago_ish ) );
 
 
 
