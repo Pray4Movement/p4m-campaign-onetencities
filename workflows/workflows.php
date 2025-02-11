@@ -559,9 +559,9 @@ class DT_Get_Fuel_For_Campaign_Job extends Job {
             SELECT pm.meta_value
             FROM $wpdb->postmeta pm 
             INNER JOIN $wpdb->postmeta pm2 ON
-             ( pm.post_id = pm2.post_id AND pm2.meta_key = 'linked_campaign' AND pm2meta_value = %d ) 
+             ( pm.post_id = pm2.post_id AND pm2.meta_key = 'linked_campaign' AND pm2.meta_value = %d ) 
             INNER JOIN $wpdb->postmeta pm3 ON
-             ( pm.post_id = pm3.post_id && pm2.meta_key = 'day' AND pm3.meta_value > %d)
+             ( pm.post_id = pm3.post_id && pm3.meta_key = 'day' AND pm3.meta_value > %d)
             WHERE pm.meta_key = 'app_prayer_point_id'
         ", $this->campaign_id, $year_ago_ish ) );
 
